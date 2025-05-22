@@ -38,7 +38,7 @@ def shortestSafeJourney(a, b, x, y):
     queue = deque()
     queue.append((a, b, 0))  # (current_x, current_y, steps)
     visited.add((a, b))
-    directions = [(-1,0),(1,0),(0,-1),(0,1)]  # Up, Down, Left, Right
+    directions = [(-1,0),(1,0),(0,-1),(0,1)]  # down, up, Left, Right
 
     while queue:
         cx, cy, steps = queue.popleft()  # Get the next coordinate and step count
