@@ -15,7 +15,7 @@ def totalSafeSquares(max_dist=9999):
     queue = deque()           # Queue for BFS
     queue.append((0, 0))      # Start from (0, 0)
     visited.add((0, 0))
-    directions = [(-1,0),(1,0),(0,-1),(0,1)]  # Up, Down, Left, Right
+    directions = [(-1,0),(1,0),(0,-1),(0,1)]  # Down, up, Left, Right
 
     while queue:
         cx, cy = queue.popleft()  # Get the next coordinate to explore
