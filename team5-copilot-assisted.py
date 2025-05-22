@@ -9,18 +9,21 @@ def isSafe(x, y):
     product = x * y
     return digit_sum(product) < 19
 
-def totalSafeSquares():
-    # Returns the total number of safe squares reachable from (0, 0)
-    visited = set()  # Set to keep track of visited coordinates
-    queue = deque()
-    queue.append((0, 0))  # Start from (0, 0)
+def totalSafeSquares(max_dist=9999):
+    # Returns the total number of safe squares reachable from (0, 0) within max_dist
+    visited = set()           # Set to keep track of visited coordinates
+    queue = deque()           # Queue for BFS
+    queue.append((0, 0))      # Start from (0, 0)
     visited.add((0, 0))
     directions = [(-1,0),(1,0),(0,-1),(0,1)]  # Up, Down, Left, Right
 
     while queue:
-        cx, cy = queue.popleft()
+        cx, cy = queue.popleft()  # Get the next coordinate to explore
         for dx, dy in directions:
             nx, ny = cx + dx, cy + dy  # Calculate neighbor coordinates
+            # Limit the search to within max_dist from (0,0)
+            if abs(nx) > max_dist or abs(ny) > max_dist:
+                continue
             # If not visited and safe, add to queue and visited set
             if (nx, ny) not in visited and isSafe(nx, ny):
                 visited.add((nx, ny))
@@ -38,7 +41,7 @@ def shortestSafeJourney(a, b, x, y):
     directions = [(-1,0),(1,0),(0,-1),(0,1)]  # Up, Down, Left, Right
 
     while queue:
-        cx, cy, steps = queue.popleft()
+        cx, cy, steps = queue.popleft()  # Get the next coordinate and step count
         if (cx, cy) == (x, y):
             return steps  # Reached destination
         for dx, dy in directions:
@@ -48,3 +51,14 @@ def shortestSafeJourney(a, b, x, y):
                 visited.add((nx, ny))
                 queue.append((nx, ny, steps + 1))
     return -1  # No safe path found
+
+if __name__ == "__main__":
+    # This block runs only if the script is executed directly (not imported as a module)
+    
+    # Print the number of safe squares reachable from (0, 0)
+    # The max_dist parameter limits how far from (0, 0) the search will go
+    print("Number of safe squares:", totalSafeSquares(9999))  # 9999 is adjustable
+    
+    # Print the shortest number of steps in a safe journey from (0,0) to (5,5)
+    # Returns -1 if there is no safe path
+    print("Shortest safe journey from (0,0) to (5,5):", shortestSafeJourney(0, 0, 5, 5))
